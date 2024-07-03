@@ -22,7 +22,7 @@ export default function Register(){
 
         event.preventDefault();
       /*  try{
-          const response=await fetch("http://localhost:3000/api/auth/register",{    
+          const response=await fetch("https://flexkart2.onrender.com/api/auth/register",{    
                method:"POST",
                headers:{
                    'Content-Type':'application/json'
@@ -50,7 +50,7 @@ export default function Register(){
           }
           else{
           try{
-            const res=await axios.post("http://localhost:3000/api/auth/register",{
+            const res=await axios.post("https://flexkart2.onrender.com/api/auth/register",{
               name,
               password:pass1,
               email,
