@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+nav{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+}
+.active{
+  border-bottom: 2px solid black;
+}
+.toastBody{
+  --toastify-icon-color-info: rgb(29,78,216);
+
+  
+}
+.Toastify__progress-bar--info {
+  background: rgb(29,78,216);
+}
+
+
+
+
+
+
+
+/* Dropdown Button */
+
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+
+
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+
+/*adminlayout*/
+
+@media (min-width:400px) {
+  .list{
+    border: 1px solid black;
+    height:40px;
+    font-size: 100%;
+    width:50vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+ 
+  
+  }
+  .title{
+    border:1px solid black;
+   font-size: 200%;
+    height:60px;
+    width:50vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+}
+@media (max-width:400px) {
+  
+.list{
+  border: 1px solid black;
+  height:40px;
+  font-size: 100%;
+  width:30vh;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+
+
+}
+.title{
+  border:1px solid black;
+ font-size: 200%;
+  height:60px;
+  width:30vh;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+
+}
+}
+
+/*admindashboard*/
+
+.list1{
+  border: 1px solid black;
+    height:60px;
+    font-size: 120%;
+    width:50vh;
+    display:flex;
+   padding-left: 20px;
+    align-items: center;
+}
+.title1{
+  border:1px solid black;
+  font-size: 200%;
+   height:100px;
+   width:50vh;
+   display:flex;
+   justify-content: center;
+   align-items: center;
+   background-color: rgb(233, 216, 216);
+}
+/*footer*/
+.bro{
+  background-color:rgb(241, 237, 237) ;
+  height:40px;
+  width: 40px;
+  border-radius: 50%;
+  margin:5px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2) ;
+  
+}
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+.fa-linkedin{
+  background:#007bb5;
+  color: white;
+}
+.fa-instagram{
+  background:radial-gradient(circle at 33% 100%, #fed373 4%, #f15245 30%, #d92e7f 62%, #9b36b7 85%, #515ecf) ;
+  color:white;
+}
+footer{
+  background-color: rgb(107, 107, 241);
+}
+
+
