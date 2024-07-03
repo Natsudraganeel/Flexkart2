@@ -70,7 +70,7 @@ const setminus=(p)=>{
     // get clienttoken
     const getclienttoken=async()=>{
         try{
-        const res=await axios.get("http://localhost:3000/api/auth/products/product/token");
+        const res=await axios.get("https://flexkart2.onrender.com/api/auth/products/product/token");
         console.log(res.data.clientToken);
         setclienttoken(res.data.clientToken);
 
@@ -89,7 +89,7 @@ getclienttoken();
             
         setloading(true);
 const {nonce}= await instance.requestPaymentMethod();
-const res=await axios.post("http://localhost:3000/api/auth/products/product/payment",{cart,auth,nonce});
+const res=await axios.post("https://flexkart2.onrender.com/api/auth/products/product/payment",{cart,auth,nonce});
 setloading(false);
 setcome(false);
 setcart([]);
@@ -122,7 +122,7 @@ nav("/");
                     <>
                     <div style={{width:"20rem"}} className="  mx-2.5 my-2.5  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  >
 <div style={{display:"flex", justifyContent:"center"}}>
-        <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
+        <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
         </div>
     <div class="p-5">
         <h5>Name: {p.pro.name}</h5>
