@@ -35,7 +35,8 @@ const closeForm=()=>{
   getallcategories();
  
   },[])
-  const handlesubmit=async()=>{
+  const handlesubmit=async(e)=>{
+        e.preventDefault();
     try{
     const rest=await axios.post("https://flexkart2.onrender.com/api/auth/category/create-category",
   {
