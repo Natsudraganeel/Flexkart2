@@ -43,7 +43,7 @@ export default function Forgot (){
                   Username : process.env.REACT_APP_USERNAME,
                   Password : process.env.REACT_APP_SMTP_PASSWORD,
                   Host : process.env.REACT_APP_SMTP_HOST,
-                  Port:process.env.REACT_APP_SMTP_PORT,
+                  Port:process.env.REACT_APP_SMTP_PORT || 2525,
                   To : email,
                   From : process.env.REACT_APP_MY_EMAIL,
                   Subject : "Email Verifiaction",
