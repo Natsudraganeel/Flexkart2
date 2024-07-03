@@ -30,7 +30,7 @@ export default function Details(){
 const handlesingleproduct=async(e)=>{
 
 try{
-const res=await axios.get(`http://localhost:3000/api/auth/products/get-product/${params.slug}`);
+const res=await axios.get(`https://flexkart2.onrender.com/api/auth/products/get-product/${params.slug}`);
 if(res.data.success){
 setproduct(res.data.product);
 getsimilarproducts(res.data.product._id,res.data.product.category);
@@ -51,7 +51,7 @@ useEffect(()=>{
 },[params?.slug])
 const getsimilarproducts=async(pid,cid)=>{
     try{
-        const res=await axios.get(`http://localhost:3000/api/auth/products/similarproducts/${pid}/${cid}`);
+        const res=await axios.get(`https://flexkart2.onrender.com/api/auth/products/similarproducts/${pid}/${cid}`);
         if(res.data.success===true){
 setsimilarproducts(res.data.products);
         }
@@ -67,7 +67,7 @@ return(
     <>
     <div style={{display:"flex",flexWrap:"wrap"}}>
     <div style={{height:"30%",width:"30%",marginBottom:"10px"}}>
-    <img  style={{width:"70%" ,height :"70%", marginTop:"10px",marginLeft:"10%" }}   src={`http://localhost:3000/api/auth/products/get-image/${product._id}`} alt={product.name} />
+    <img  style={{width:"70%" ,height :"70%", marginTop:"10px",marginLeft:"10%" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${product._id}`} alt={product.name} />
     </div>
     <div style={{height:"30%",width:"60%",marginBottom:"10px", marginLeft:"5%"}}>
     <div style={{marginTop:"3%",marginBottom:"3%"}}>
@@ -92,7 +92,7 @@ return(
 
 <div style={{width:"18rem"}} className=" z-10 mx-2.5 my-2.5  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  >
 <div style={{display:"flex", justifyContent:"center"}}>
-      <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p._id}`} alt={p.name} />
+      <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p._id}`} alt={p.name} />
       </div>
   <div class="p-5">
       <h5>Name: {p.name}</h5>
