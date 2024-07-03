@@ -14,7 +14,7 @@ export default function Login(){
   async function handlesubmit(e){
           e.preventDefault();
           try{
-            const res=await axios.post("http://localhost:3000/api/auth/login",{
+            const res=await axios.post("https://flexkart2.onrender.com/api/auth/login",{
               email,
               password,
         
