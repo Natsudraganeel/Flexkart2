@@ -31,7 +31,7 @@ export default  function Navbar() {
       const nav=useNavigate();
       const getallcategories=async()=>{
         try{
-      const res=await axios.get("http://localhost:3000/api/auth/category/getallcategories");
+      const res=await axios.get("https://flexkart2.onrender.com/api/auth/category/getallcategories");
       if(res.data.success===true){
         setcategories(res.data.categories)
         console.log(res.data.categories);
@@ -61,7 +61,7 @@ const handlesubmit=async(e)=>{
 e.preventDefault();
 try{
   console.log(search.keyword);
-const res=await axios.get(`http://localhost:3000/api/auth/products/searchproduct/${search.keyword}`);
+const res=await axios.get(`https://flexkart2.onrender.com/api/auth/products/searchproduct/${search.keyword}`);
 if(res.data.success===true){
   setsearch({...search,results:res.data.products});
   console.log(search.keyword);
