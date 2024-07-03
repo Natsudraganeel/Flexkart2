@@ -42,6 +42,7 @@ return <>
       <Route path="/admin" element={<AdminDashboard/>}></Route>
      <Route path="/admin/create-category" element={<Createcategory/>}></Route>
      <Route path="/admin/create-products" element={<Createproducts/>}></Route>
+          <Route path="/admin/create-category?" element={<Createcategory/>}></Route>
      <Route path="/admin/allproducts" element ={<Allproducts/>}></Route>
      <Route path="/admin/updateproduct/:slug" element={<Updateproducts/>}></Route>
      <Route path="/admin/orders" element={<Orders/>}></Route>
