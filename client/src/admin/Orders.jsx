@@ -12,7 +12,7 @@ export default function Orders(){
   const {Option}=Select;
   const getorders=async()=>{
     try{
-       const res=await axios.get(`http://localhost:3000/api/auth/orders`);
+       const res=await axios.get(`https://flexkart2.onrender.com/api/auth/orders`);
        
       // console.log( res.data);
         setorders( res.data);
@@ -44,7 +44,7 @@ useEffect(()=>{
 
   }
   const handlestatus=async(v,i)=>{
-    const res=await axios.put("http://localhost:3000/api/auth/changeorderstatus",{
+    const res=await axios.put("https://flexkart2.onrender.com/api/auth/changeorderstatus",{
       orderid:i,
       status:v
     })
@@ -130,7 +130,7 @@ return (
                             <>
                             <div>
                             <div>
-                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
+                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
                             </div>
                             <div className="mt-3 ml-3">
                             <p>Name :{p.pro.name}</p>
@@ -192,7 +192,7 @@ return (
                             <>
                             <div>
                             <div>
-                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
+                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
                             </div>
                             <div className="mt-3 ml-3">
                             <p>Name :{p.pro.name}</p>
