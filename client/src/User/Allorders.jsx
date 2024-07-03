@@ -10,7 +10,7 @@ export default function Allorders (){
     const [orders,setorders]=useState([]);
     const getorders=async()=>{
         try{
-           const res=await axios.get(`http://localhost:3000/api/auth/allorders/${auth.user._id}`);
+           const res=await axios.get(`https://flexkart2.onrender.com/api/auth/allorders/${auth.user._id}`);
            
            //console.log( res.data);
             setorders( res.data);
@@ -108,7 +108,7 @@ export default function Allorders (){
                             <>
                             <div>
                             <div>
-                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
+                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
                             </div>
                             <div className="mt-3 ml-3">
                             <p>Name :{p.pro.name}</p>
@@ -154,7 +154,7 @@ export default function Allorders (){
                             <>
                             <div>
                             <div>
-                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
+                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
                             </div>
                             <div className="mt-3 ml-3">
                             <p>Name :{p.pro.name}</p>
