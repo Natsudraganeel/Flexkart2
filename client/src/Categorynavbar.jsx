@@ -31,7 +31,7 @@ const settingcart=(p)=>{
     const getproductsbycategory=async()=>{
         try{
             console.log(params.slug)
-const res=await axios.get(`http://localhost:3000/api/auth/products/product-category/${params.slug}`)
+const res=await axios.get(`https://flexkart2.onrender.com/api/auth/products/product-category/${params.slug}`)
 console.log(res.data)
 if(res.data.success){
     setproducts(res.data.products);
@@ -71,7 +71,7 @@ getproductsbycategory()
 
 <div style={{width:"18rem"}} className=" z-10 mx-2.5 my-2.5  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  >
 <div style={{display:"flex", justifyContent:"center"}}>
-        <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p._id}`} alt={p.name} />
+        <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p._id}`} alt={p.name} />
         </div>
     <div class="p-5">
         <h5>Name: {p.name}</h5>
