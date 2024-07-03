@@ -28,6 +28,7 @@ export default function Modal({closeForm,props}){
         name:updatedname
       })
       //console.log(response)
+       window.location.reload();
     alert(response.data.message)
     }
     catch(err){
