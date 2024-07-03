@@ -18,7 +18,7 @@ export default function Createproducts(){
   const [photo,setphoto]=useState("");
   const nav=useNavigate();
   const getallcategories=async()=>{  
-    const resi=await axios.get("http://localhost:3000/api/auth/category/getallcategories")
+    const resi=await axios.get("https://flexkart2.onrender.com/api/auth/category/getallcategories")
  if(resi.data.success===true){
    //console.log(resi.data.categories)
    setcategories(resi.data.categories)
@@ -53,7 +53,7 @@ export default function Createproducts(){
       //   category,
       //   quantity,
       //   shipping )
-      const response=await axios.post("http://localhost:3000/api/auth/products/create-product",productData)
+      const response=await axios.post("https://flexkart2.onrender.com/api/auth/products/create-product",productData)
    
     // alert(response.data.message);
      nav("/admin/allproducts");
