@@ -11,7 +11,7 @@ export default function CartPage(){
     const [cart,setcart]=useCart();
     const [auth,setauth]=useAuth(); 
     const lekh=JSON.parse(localStorage.getItem("cart"));
-    //console.log(lekh)
+    
     const [cost,setcost]=useState(()=>{let total=0;
      lekh?.map((item)=>{total=total+item.pro.price*item.value}); return total} );
     const nav=useNavigate();
@@ -19,14 +19,7 @@ export default function CartPage(){
     const [instance,setinstance]=useState("");
     const [loading,setloading]=useState(false);
    
-/*/const totalprice=()=>{
 
-    let total=0;
-   cart.map((item)=>{total=total+item.value*item.pro.price})
-    console.log(total);
-    setcost(total);
-    return total;
-}*/
 const setplus=(p)=>{
     const ans=[...cart];
     const item=ans.find((item=> item.pro._id===p._id));
