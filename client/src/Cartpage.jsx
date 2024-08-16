@@ -18,7 +18,7 @@ export default function CartPage(){
     const [clienttoken,setclienttoken]=useState("");
     const [instance,setinstance]=useState("");
     const [loading,setloading]=useState(false);
-    const [come,setcome]=useState(false);
+   
 /*/const totalprice=()=>{
 
     let total=0;
@@ -84,14 +84,13 @@ getclienttoken();
     },[auth?.token]);
 
     const handlepayment=async()=>{
-        setcome(true);
+        
         try{
             
         setloading(true);
 const {nonce}= await instance.requestPaymentMethod();
 const res=await axios.post("https://flexkart2.onrender.com/api/auth/products/product/payment",{cart,auth,nonce});
 setloading(false);
-setcome(false);
 setcart([]);
 localStorage.removeItem("cart");
 localStorage.removeItem("__paypal_storage__");
