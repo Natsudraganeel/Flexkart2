@@ -23,7 +23,7 @@ async function sendEmail(event){
             event.preventDefault();
     
             try{
-              const res=await axios.post("http://localhost:3000/api/auth/emailcheck",{
+              const res=await axios.post("https://flexkart2.onrender.com/api/auth/emailcheck",{
                 email
               })
               // console.log(res.data);
@@ -37,12 +37,7 @@ async function sendEmail(event){
               
                // console.log(ox);
                   setsentotp(ox);
-                //  console.log(process.env.REACT_APP_SMTP_PASSWORD);
-                //  console.log(process.env.REACT_APP_SMTP_HOST);
-                //    console.log(process.env.REACT_APP_SMTP_PORT);
-                //    console.log(process.env.REACT_APP_USERNAME);
-                //    console.log(process.env.REACT_APP_MY_EMAIL);
-                 //re_H2jpiqcJ_3wpAogQBAz4zZCBxrYutZ1t4
+             
                 const config={
                   Username : process.env.REACT_APP_USERNAME,
                   Password : process.env.REACT_APP_SMTP_PASSWORD,
@@ -83,7 +78,7 @@ async function sendEmail(event){
             //  console.log(res.data);
             //  console.log(sentotp);
               if( sentotp==ans){
-               const res=await axios.post("http://localhost:3000/api/auth/forgotpassword",{
+               const res=await axios.post("https://flexkart2.onrender.com/api/auth/forgotpassword",{
                 email,
                
           
