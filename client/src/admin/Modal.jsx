@@ -26,7 +26,7 @@ export default function Modal({closeForm,props}){
   const handleupdate=async(e)=>{
           e.preventDefault();
     try{
-      const response=await axios.put(`http://localhost:3000/api/auth/category/update-category/${props._id}`,{
+      const response=await axios.put(`https://flexkart2.onrender.com/api/auth/category/update-category/${props._id}`,{
         name:updatedname
       },{
     headers: {
