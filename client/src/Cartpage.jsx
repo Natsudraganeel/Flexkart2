@@ -63,7 +63,7 @@ const setminus=(p)=>{
     // get clienttoken
     const getclienttoken=async()=>{
         try{
-        const res=await axios.get("https://flexkart2.onrender.com/api/auth/products/product/token");
+        const res=await axios.get("http://localhost:3000/api/auth/products/product/token");
         console.log(res.data.clientToken);
         setclienttoken(res.data.clientToken);
 
@@ -77,18 +77,37 @@ getclienttoken();
     },[auth?.token]);
 
     const handlepayment=async()=>{
-        
+        if (cart.length===0) {
+             toast.error("Your cart is empty", {
+                                              position: "top-right",
+                                              }) 
+    
+    return;
+  }
         try{
             
         setloading(true);
 const {nonce}= await instance.requestPaymentMethod();
-const res=await axios.post("https://flexkart2.onrender.com/api/auth/products/product/payment",{cart,auth,nonce});
+const res=await axios.post("http://localhost:3000/api/auth/products/product/payment",{cart,auth,nonce},{
+    headers: {
+      Authorization: auth.token,
+    },
+  });
+  if(res.data.success===false){
+    alert(res.data.message)
+                                              setcart([]);
+localStorage.removeItem("cart");
+localStorage.removeItem("__paypal_storage__");
+nav("/")
+  }
+  else{
 setloading(false);
 setcart([]);
 localStorage.removeItem("cart");
 localStorage.removeItem("__paypal_storage__");
 //alert("success");
 nav("/");
+  }
         }
         catch(err){
             console.log(err);
@@ -114,7 +133,7 @@ nav("/");
                     <>
                     <div style={{width:"20rem"}} className="  mx-2.5 my-2.5  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  >
 <div style={{display:"flex", justifyContent:"center"}}>
-        <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
+        <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
         </div>
     <div class="p-5">
         <h5>Name: {p.pro.name}</h5>
@@ -167,16 +186,13 @@ nav("/");
             <div className="mt-10 mx-3">
               <button onClick={()=>{nav("/dashboard")}} type="submit" className="w-30 text-white bg-blue-700 hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" disabled={loading }>Update address</button>
               </div>
-              <div style={{}}>
+              <div >
          {!clienttoken ? (""):
          (
             
              <>
           <DropIn
-            options={{ authorization:clienttoken ,
-            paypal:{
-                flow:'vault',
-            },
+            options={{ authorization:clienttoken 
             }}
             onInstance={instance => setinstance(instance)}
             

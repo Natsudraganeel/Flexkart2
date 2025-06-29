@@ -9,7 +9,8 @@ import productroutes from "./routes/productroute.js"
 import categoryroutes from "./routes/categoryroute.js"
 dotenv.config();// sabse upar hona chahiye
 const app=express();
-app.use(cors());
+app.use(cors({
+    origin:process.env.FRONTEND_URL}));
 app.use(express.json());// alternative of bodyparser
 app.use(morgan('dev')); //log req and res in console for development
 app.use("/api/auth",authroutes);

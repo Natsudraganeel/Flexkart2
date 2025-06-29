@@ -8,6 +8,7 @@ export const requiredsignin = async (req, res, next) => {
         req.headers.authorization,
         process.env.JWT_SECRET
       );
+      console.log(req.headers.authorization);// token
       console.log(decode);
      req.user = decode;
       next();

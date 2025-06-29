@@ -29,7 +29,7 @@ const regschema=new  mongoose.Schema({
   },
   shipping:{
     type:Boolean,
-    
+    default: false
   },
   image:{
     data:Buffer,

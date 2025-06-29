@@ -58,7 +58,7 @@ else{
      }
      catch(err){
         res.send({
-            success:"false",
+            success:false,
             message:"login error"
         })
     }
@@ -101,12 +101,13 @@ catch(err){
 }
 export const updateprofilecontroller=async(req,res)=>{
 try{
-const {name,address,email,phone,password,id}=req.body;
+const {name,address,email,phone,opassword,npassword,id}=req.body;
 console.log(id);
 let user=await User.findById(id);
 console.log(user);
-
-const hashedpassword= password ? await hashPassword(password) : undefined;
+       let match=await comparePassword(opassword,user.password);
+        if(!match) {return res.send({success:false,message:'Invalid Old Password'})}
+const hashedpassword= npassword ? await hashPassword(npassword) : undefined;
 //console.log(hashedpassword);
 const updateduser=await User.findByIdAndUpdate(id,{
   name:name || user.name,
@@ -127,25 +128,25 @@ res.send({
 catch(err){
   res.send({
     success:false,
-    message:err.message,
+    message:"server error"
     
   })
 }
 }
- export const test=async(req,res)=>{
-    res.send("protrcde route");
- }
+//  export const test=async(req,res)=>{
+//     res.send("protrcde route");
+//  }
 export const allorderscontroller=async(req,res)=>{
   try{
     console.log(req.params.id)
-    let orders=await Order.find({buyerid:req.params.id});
+    let orders=await Order.find({buyerid:req.params.id}).sort({ createdAt: -1 });
     console.log(orders);
     res.json(orders);
   }
   catch(err){
     res.send({
       success:false,
-      message:err.message,
+      message:"server error"
       
     })
   }
@@ -153,14 +154,14 @@ export const allorderscontroller=async(req,res)=>{
 export const allordersadmincontroller=async(req,res)=>{
   try{
     
-    let orders=await Order.find({}).sort("-1");
+    let orders=await Order.find({}).sort({ createdAt: -1 });;
    // console.log(orders);
     res.json(orders);
   }
   catch(err){
     res.send({
       success:false,
-      message:err.message,
+      message:"server error"
       
     })
   }

@@ -17,18 +17,20 @@ export default function Dashboard (){
   const [address,setaddress]=useState(ls.user.address);
   const [phone,setphone]=useState(ls.user.phone);
   const [pass1,setpass1]=useState("");
+  const [pass2,setpass2]=useState("");
 
 
-  function change1(event){
-    setpass1(event.target.value);
-}
 async function handlesubmit(e){
   e.preventDefault();
  // console.log("in update")
   try{
-const res=await axios.put("https://flexkart2.onrender.com/api/auth/updateprofile",{
-  name,address,email,phone,password:pass1,id:auth.user._id
-});
+const res=await axios.put("http://localhost:3000/api/auth/updateprofile",{
+  name,address,email,phone,opassword:pass1,npassword:pass2,id:auth.user._id
+}, {
+    headers: {
+      Authorization: auth.token,
+    },
+  });
 //console.log(res.data);
 if(res.data.success===true){
 // console.log("ins uccess")
@@ -50,6 +52,11 @@ if(res.data.success===true){
   }) 
 
 
+}
+else{
+   toast.error(res.data.message, {
+                                            position: "top-right",
+                                            }) 
 }
 
   }
@@ -93,8 +100,12 @@ if(res.data.success===true){
             <input value={address} onChange={(e)=>setaddress(e.target.value)} type="text" name="address" id="address" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"   />
           </div>
           <div>
-            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
-            <input onChange={change1} type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
+            <label htmlFor="opassword" className="block mb-2 text-sm font-medium text-gray-900 ">Old Password</label>
+            <input  onChange={(e)=>setpass1(e.target.value)} type="password" name="opassword" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
+          </div>
+          <div>
+            <label htmlFor="npassword" className="block mb-2 text-sm font-medium text-gray-900 ">New Password</label>
+            <input  onChange={(e)=>setpass2(e.target.value)} type="password" name="npassword" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
           </div>
         
 

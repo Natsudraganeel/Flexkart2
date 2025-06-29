@@ -4,6 +4,8 @@ import Adminlayout from "./Adminlayout";
 import Spinner from "../spinner";
 import { useAuth } from "../auth/Auth";
 import { NavLink,Link,useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {Select} from "antd"
 export default function Createproducts(){
   const [auth,setauth]=useAuth();
@@ -18,7 +20,7 @@ export default function Createproducts(){
   const [photo,setphoto]=useState("");
   const nav=useNavigate();
   const getallcategories=async()=>{  
-    const resi=await axios.get("https://flexkart2.onrender.com/api/auth/category/getallcategories")
+    const resi=await axios.get("http://localhost:3000/api/auth/category/getallcategories")
  if(resi.data.success===true){
    //console.log(resi.data.categories)
    setcategories(resi.data.categories)
@@ -53,13 +55,24 @@ export default function Createproducts(){
       //   category,
       //   quantity,
       //   shipping )
-      const response=await axios.post("https://flexkart2.onrender.com/api/auth/products/create-product",productData)
-   
+      const response=await axios.post("http://localhost:3000/api/auth/products/create-product",productData,{
+    headers: {
+      Authorization: auth.token,
+    }
+  })
+   console.log(response)
     // alert(response.data.message);
+    if(response.data.success===false){
+             toast.error(response.data.message, {
+                                                 position: "top-right",
+                                                 }) 
+    }
+    else{
      nav("/admin/allproducts");
     }
+    }
     catch(err){
-alert(err.message);
+// alert(err.message);
 console.log(err.message);
     }
   }
@@ -135,6 +148,7 @@ return (
               <button onClick={handlesubmit} type="submit" className="w-40 text-white bg-blue-700 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Submit</button>
               </div>
               </form>
+              <ToastContainer bodyClassName="toastBody"/>
               
     </div>
     ):

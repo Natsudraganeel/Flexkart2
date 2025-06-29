@@ -2,17 +2,23 @@ import { React,useState,useEffect } from "react";
 import axios from "axios";
 import Adminlayout from "./Adminlayout";
 import Spinner from "../spinner";
+import moment from "moment-timezone"
 import { useAuth } from "../auth/Auth";
 import {Select} from "antd"
 export default function Orders(){
   const [auth,setauth]=useAuth();
   const [orders,setorders]=useState([]);
-  const [status,setstatus]=useState(["Not processing","processing","shipped","delivered","cancel"]);
+  const [status,setstatus]=useState(["Not processing","processing","shipped","delivered"]);
   const [changestatus,setchangestatus]=useState("");
   const {Option}=Select;
   const getorders=async()=>{
     try{
-       const res=await axios.get(`https://flexkart2.onrender.com/api/auth/orders`);
+        // console.log(auth.token)
+       const res=await axios.get(`http://localhost:3000/api/auth/orders`,{
+        headers:{
+            Authorization:auth.token
+        }
+       });
        
       // console.log( res.data);
         setorders( res.data);
@@ -37,17 +43,27 @@ useEffect(()=>{
     p?.map((item)=>{total=total+item.pro.price*item.value}); 
     return "₹" + total;
   }
-  function handledate(d){
-      let ans1=d.slice(0,10);
-      let ans2=d.slice(12,19)
-      return ans1+" "+ans2;
+  function handletotal(p){
+    //  console.log(p);
+      let total=0;
+      p?.map((item)=>{total=total+item.pro.price*item.value}); 
+      return "₹" + total;
+    }
+    function handledate(d){
+    const formatted = moment(d).tz('Asia/Kolkata').format('DD MMM YYYY, hh:mm A');
+        return formatted;
 
-  }
+    }
   const handlestatus=async(v,i)=>{
-    const res=await axios.put("https://flexkart2.onrender.com/api/auth/changeorderstatus",{
+    const res=await axios.put("http://localhost:3000/api/auth/changeorderstatus",{
       orderid:i,
       status:v
-    })
+    },
+      {
+    headers: {
+      Authorization: auth.token,
+    },
+  })
     getorders();//calling this will update the change in the page
   }
   
@@ -130,7 +146,22 @@ return (
                             <>
                             <div>
                             <div>
-                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
+                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p.pro._id}`} alt="N/A"
+                                   onError={(e) => {
+    e.target.onerror = null;
+    e.target.style.display = "none";
+    const altText = document.createElement("div");
+    altText.textContent = e.target.alt;
+    altText.style.width = "100px";
+    altText.style.height = "100px";
+    altText.style.marginTop = "10px";
+    altText.style.display = "flex";
+    altText.style.alignItems = "center";
+    altText.style.justifyContent = "center";
+    altText.style.border = "1px solid #ccc";
+    altText.style.backgroundColor = "#f0f0f0";
+    e.target.parentNode.appendChild(altText);
+  }} />
                             </div>
                             <div className="mt-3 ml-3">
                             <p>Name :{p.pro.name}</p>
@@ -192,7 +223,23 @@ return (
                             <>
                             <div>
                             <div>
-                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
+                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p.pro._id}`} alt="N/A" 
+                                       onError={(e) => {
+    e.target.onerror = null;
+    e.target.style.display = "none";
+    const altText = document.createElement("div");
+    altText.textContent = e.target.alt;
+    altText.style.width = "100px";
+    altText.style.height = "100px";
+    altText.style.marginTop = "10px";
+    altText.style.display = "flex";
+    altText.style.alignItems = "center";
+    altText.style.justifyContent = "center";
+    altText.style.border = "1px solid #ccc";
+    altText.style.backgroundColor = "#f0f0f0";
+    e.target.parentNode.appendChild(altText);
+  }}
+                            />
                             </div>
                             <div className="mt-3 ml-3">
                             <p>Name :{p.pro.name}</p>

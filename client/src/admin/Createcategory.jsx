@@ -3,6 +3,8 @@ import Modal from "./Modal";
 import axios from "axios";
 import Adminlayout from "./Adminlayout";
 import Spinner from "../spinner";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from "../auth/Auth";
 import { NavLink,Link } from "react-router-dom";
 export default function Createcategory(){
@@ -11,16 +13,20 @@ export default function Createcategory(){
   const [createcat,setcreatecat]=useState("");
   const [showForm,setShowForm]=useState(false);
   const [newname,setnewname]=useState({});
-  const openForm=()=>{
-    setShowForm(true);
-}
+//   const openForm=()=>{
+//     setShowForm(true);
+// }
 
 const closeForm=()=>{
   setShowForm(false);
 }
 
   const getallcategories=async()=>{  
-     const resi=await axios.get("https://flexkart2.onrender.com/api/auth/category/getallcategories")
+     const resi=await axios.get("http://localhost:3000/api/auth/category/getallcategories",{
+    headers: {
+      Authorization: auth.token,
+    },
+  })
   if(resi.data.success===true){
    // console.log(resi.data.categories)
     setcategories(resi.data.categories);
@@ -38,17 +44,26 @@ const closeForm=()=>{
   const handlesubmit=async(e)=>{
         e.preventDefault();
     try{
-    const rest=await axios.post("https://flexkart2.onrender.com/api/auth/category/create-category",
+    const rest=await axios.post("http://localhost:3000/api/auth/category/create-category",
   {
     name:createcat
+  },{
+    headers: {
+      Authorization: auth.token,
+    }
   })
   //console.log(rest.data)
   if(rest.data.success===true){
+       alert(rest.data.message)
+       window.location.reload();
      getallcategories();
     //alert(rest.data.message);
   }
   else{
     //alert(rest.data.message);
+       toast.error(rest.data.message, {
+                                      position: "top-right",
+                                      }) 
   }
   
 }
@@ -60,14 +75,25 @@ catch(err){
   const handledelete=async(rex)=>{
 
     try{
-        const response=await axios.delete(`https://flexkart2.onrender.com/api/auth/category/delete-category/${rex._id}`);
+        const response=await axios.delete(`http://localhost:3000/api/auth/category/delete-category/${rex._id}`,
+          {
+    headers: {
+      Authorization: auth.token,
+    }
+  }
+        );
     
     if(response.data.success===true){
+      alert(response.data.message)
+       window.location.reload();
       getallcategories();
      // alert(response.data.message)
     }
     else{
       //alert(response.data.message)
+        toast.error(response.data.message, {
+                                      position: "top-right",
+                                      }) 
     }
    
 
@@ -143,6 +169,7 @@ return (
 
 
               </div>
+              <ToastContainer bodyClassName="toastBody"/>
     </div>
     ):
     (

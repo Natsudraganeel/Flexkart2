@@ -1,5 +1,7 @@
 import React ,{useState} from "react"
 import { NavLink,useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 
 export default function Register(){
@@ -50,7 +52,7 @@ export default function Register(){
           }
           else{
           try{
-            const res=await axios.post("https://flexkart2.onrender.com/api/auth/register",{
+            const res=await axios.post("http://localhost:3000/api/auth/register",{
               name,
               password:pass1,
               email,
@@ -64,7 +66,9 @@ export default function Register(){
               nav("/login");
             }
             else{
-              console.log(res.data.message);
+           toast.error(res.data.message, {
+                                          position: "top-right",
+                                          }) 
             }
           }
           catch(err){
@@ -117,6 +121,7 @@ export default function Register(){
       </div>
     </div>
   </div>
+  <ToastContainer bodyClassName="toastBody"/>
 </section>)
 
 }

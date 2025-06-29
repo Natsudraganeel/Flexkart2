@@ -24,7 +24,7 @@ export default function Forgot (){
             event.preventDefault();
     
             try{
-              const res=await axios.post("https://flexkart2.onrender.com/api/auth/forgotpassword",{
+              const res=await axios.post("http://localhost:3000/api/auth/forgotpassword",{
                 email
               })
               // console.log(res.data);
@@ -74,7 +74,7 @@ export default function Forgot (){
     async function handlesubmit(e){
             e.preventDefault();
             try{
-              const res=await axios.post("https://flexkart2.onrender.com/api/auth/forgotpassword",{
+              const res=await axios.post("http://localhost:3000/api/auth/forgotpassword",{
                 email,
                
           

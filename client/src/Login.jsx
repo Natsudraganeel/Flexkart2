@@ -1,5 +1,7 @@
 import React,{useState} from "react"
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { NavLink ,useNavigate} from "react-router-dom";
 import { useAuth } from "./auth/Auth";
 export default function Login(){
@@ -14,7 +16,7 @@ export default function Login(){
   async function handlesubmit(e){
           e.preventDefault();
           try{
-            const res=await axios.post("https://flexkart2.onrender.com/api/auth/login",{
+            const res=await axios.post("http://localhost:3000/api/auth/login",{
               email,
               password,
         
@@ -38,7 +40,9 @@ export default function Login(){
            
             }
             else{
-              console.log(res.data.message);
+               toast.error(res.data.message, {
+                                  position: "top-right",
+                                  }) 
             }
           }
           catch(err){
@@ -80,6 +84,8 @@ export default function Login(){
           </form>
         </div>
       </div>
+      
     </div>
+    <ToastContainer bodyClassName="toastBody"/>
     </section>)
 }

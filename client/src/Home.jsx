@@ -9,6 +9,8 @@ import img2 from "./images/off.webp"
 import img3 from "./images/gadgetsoffer.png"
 import Price from "./listofprice"
 import {Radio} from "antd"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {useNavigate } from "react-router-dom";
 export default function Home (){
 const nav=useNavigate();
@@ -20,7 +22,15 @@ const [checked,setchecked]=useState([]);
 const [radio,setradio]=useState([]);
 
 const settingcart=(p)=>{
+  if(p.quantity===0){
+       toast.error("currently not available", {
+                                            position: "top-right",
+                                            }) 
+                                            return ;
+  }
   const k=cart.find((item)=> item.pro._id===p._id);
+  
+  
   console.log(k);
   if(auth.user!==null && k===undefined){
  
@@ -36,10 +46,15 @@ else{
 }
 const getallcategories=async()=>{
   try{
-const res=await axios.get("https://flexkart2.onrender.com/api/auth/category/getallcategories");
+const res=await axios.get("http://localhost:3000/api/auth/category/getallcategories");
 if(res.data.success===true){
   setcategories(res.data.categories)
  
+}
+else{
+   toast.error(res.data.message, {
+                                            position: "top-right",
+                                            }) 
 }
   }
   catch(err){
@@ -52,14 +67,20 @@ useEffect(()=>{
   },[])
 
   const getallproducts=async()=>{
-    const res=await axios.get("https://flexkart2.onrender.com/api/auth/products/getallproducts");
+    try{
+    const res=await axios.get("http://localhost:3000/api/auth/products/getallproducts");
     if(res.data.success==true){
         setproducts(res.data.products);
     }
-    else{
-        console.log("error");
-    }
-
+   else{
+      toast.error(res.data.message, {
+                                               position: "top-right",
+                                               }) 
+   }
+  }
+  catch(err){
+    console.log(err.message)
+  }
 
 }
 useEffect(()=>{
@@ -71,14 +92,16 @@ useEffect(()=>{
     
     const filteredproducts=async ()=>{
       try{
-const res=await axios.post("https://flexkart2.onrender.com/api/auth/products/filteredproducts",{checked,radio});
+const res=await axios.post("http://localhost:3000/api/auth/products/filteredproducts",{checked,radio});
 if(res.data.success===true){
   console.log(checked,radio);
 setproducts(res.data.products);
 console.log(res.data.products);
 }
 else{
-  console.log("error in backend")
+   toast.error(res.data.message, {
+                                            position: "top-right",
+                                            }) 
 }
       }
       catch(err){
@@ -177,7 +200,7 @@ categories.map((c)=>{
 
 <div style={{width:"18rem"}} className=" z-10 mx-2.5 my-2.5  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  >
 <div style={{display:"flex", justifyContent:"center"}}>
-        <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p._id}`} alt={p.name} />
+        <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p._id}`} alt={p.name} />
         </div>
     <div class="p-5">
         <h5>Name: {p.name}</h5>
@@ -213,7 +236,7 @@ categories.map((c)=>{
 
 
 
-
+<ToastContainer bodyClassName="toastBody"/>
 
 
 </>

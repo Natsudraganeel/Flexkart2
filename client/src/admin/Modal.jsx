@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import axios from "axios";
+import { useAuth } from "../auth/Auth";
 
 export default function Modal({closeForm,props}){
     const parent = {
@@ -19,17 +20,28 @@ export default function Modal({closeForm,props}){
         right:"4px",
         top:"3px"
      }
+        const [auth,setauth]=useAuth();
      const [updatedname,setupdatedname]=useState("")
   
   const handleupdate=async(e)=>{
           e.preventDefault();
     try{
-      const response=await axios.put(`https://flexkart2.onrender.com/api/auth/category/update-category/${props._id}`,{
+      const response=await axios.put(`http://localhost:3000/api/auth/category/update-category/${props._id}`,{
         name:updatedname
-      })
+      },{
+    headers: {
+      Authorization: auth.token,
+    },
+  })
       //console.log(response)
+      if(response.data.success===true){
+          alert(response.data.message)
        window.location.reload();
-    alert(response.data.message)
+      }
+      else{
+         alert(response.data.message)
+      }
+
     }
     catch(err){
 alert("react error")

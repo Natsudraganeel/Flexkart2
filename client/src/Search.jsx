@@ -1,9 +1,10 @@
-import { React, useState,useEffect } from "react";
+
 import { useSearch } from "./auth/search";
 import { useCart } from "./auth/Cart";
 import { useAuth } from "./auth/Auth";
-import axios from "axios"
-import { Navigate, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 export default function Search(){
       const [cart,setcart]=useCart();
       const [auth,setauth]=useAuth();
@@ -12,6 +13,12 @@ export default function Search(){
     
 const settingcart=(p)=>{
    // console.log(cart);
+    if(p.quantity===0){
+          toast.error("currently not available", {
+                                               position: "top-right",
+                                               }) 
+                                               return ;
+     }
     const k=cart.find((item)=> item.pro._id===p._id);
    // console.log(k);
     if(auth.user!==null && k===undefined){
@@ -42,7 +49,7 @@ return (
 
 <div style={{width:"18rem"}} className="  mx-2.5 my-2.5  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  >
 <div style={{display:"flex", justifyContent:"center"}}>
-        <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p._id}`} alt={p.name} />
+        <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p._id}`} alt={p.name} />
         </div>
     <div class="p-5">
         <h5>Name: {p.name}</h5>
@@ -67,6 +74,7 @@ return (
                         })
                     }
         </div>
+         <ToastContainer bodyClassName="toastBody"/>
     </>
 )
 }

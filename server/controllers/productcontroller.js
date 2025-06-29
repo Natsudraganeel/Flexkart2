@@ -5,6 +5,7 @@ import Category from "../Models/Categorymodel.js";
 import braintree from "braintree";
 import Order from "../Models/Ordersmodel.js";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
 dotenv.config();
 //normally photo comes in the form of form data.Inoder to get form data we use express-formidable which is an npm package
 var gateway = new braintree.BraintreeGateway({
@@ -17,11 +18,12 @@ export const createproductcontroller=async(req,res)=>{
 try{
     const {image}=req.files;
     const {name,slug,description,price,category,quantity,shipping}=req.fields;
-    console.log(quantity);
+    // console.log(quantity);
+    // console.log(req.fields);
     //validation
     switch(true){
         case !name:
-            return res.send({success:false,message:"name not found"});
+            return res.status(400).send({success:false,message:"name not found"});
             case !description:
             return res.send({success:false,message:"description not found"});
             case !price:
@@ -50,7 +52,7 @@ catch(err){
     res.send({
         success:false,
         
-        message:err.message
+        message:"server error"
     })
 }
 }
@@ -70,7 +72,7 @@ export const getallproductscontroller=async(req,res)=>{
 catch(err){
     res.send({
         success:false,
-        message:err.message
+        message:"server error"
     })
 }
 }
@@ -92,7 +94,7 @@ export const getsingleproductcontroller=async(req,res)=>{
 catch(err){
     res.send({
         success:false,
-        message:err.message
+        message:"server error"
     })
 }
 }
@@ -109,7 +111,7 @@ catch (error) {
     res.status(500).send({
       success: false,
       message: "Erorr while getting photo",
-      error,
+      
     });
   }
 }
@@ -125,7 +127,7 @@ export const deleteproductcontroller=async(req,res)=>{
     }catch(err){
         res.send({
             success:false,
-            message:err.message
+            message:"server error"
         })
     }
 } 
@@ -146,6 +148,8 @@ export const updateproductcontroller=async(req,res)=>{
                 return res.send({success:false,message:"category not found"});
                 case !quantity:
                 return res.send({success:false,message:"quantity not found"});
+                 case quantity<0:
+                return res.send({success:false,message:"quantity invalid"});
                 case image && image.size>9000000 :         // this number is in bytes.Therefore 9mb
                 return res.send({success:false,message:"photo exceeding size"});
         }
@@ -166,7 +170,7 @@ export const updateproductcontroller=async(req,res)=>{
         res.send({
             success:false,
             
-            message:err.message
+            message:"server error"
         })
     }
     }
@@ -184,7 +188,7 @@ export const updateproductcontroller=async(req,res)=>{
         catch(err){
             res.send({
                 success:false,
-                message:err.message
+                message:"server error"
 
             })
         }
@@ -192,12 +196,12 @@ export const updateproductcontroller=async(req,res)=>{
     export const productbycategorycontroller=async(req,res)=>{
        try{
         console.log("hello");
-        console.log(req.params);
+        // console.log(req.params);
         const category=await Category.findOne({slug:req.params.slug});
         console.log(category);
         const products=await Products.find({category}).select("-image");
       
-        console.log(products)
+        // console.log(products)
         res.send({
             success:true,
 message:"product by category",
@@ -208,7 +212,7 @@ category
     catch(err){
         res.send({
             success:false,
-            message:err.message,
+            message:"server error"
 
         })
     }
@@ -225,7 +229,7 @@ category
             args.price={$gte:radio[0],$lte:radio[1]};
 
         }
-        const products=await Products.find(args);
+        const products=await Products.find(args).sort({createdAt:-1});
         res.send({
             success:true,
             message:"Filtered products",
@@ -236,12 +240,35 @@ category
     catch(err){
         res.send({
             success:false,
-            message:err.message,
+            message:"server error"
             
         })
     }
 
     }
+    export const categoryfilter=async(req,res)=>{
+           try{
+              const {radio}=req.body;
+                 const args={};
+                if(radio.length){
+            args.price={$gte:radio[0],$lte:radio[1]};
+        }
+              const cat=await Category.findOne({slug:req.params.slug});
+              const products=await Products.find({category:cat,...args});
+              console.log("yeh le     "+products)
+              res.send({
+                success:true,
+                products
+              })
+           }
+           catch(err){
+res.send({
+                success:false,
+                message:"server error"
+              })
+           }
+    }
+
     export const searchproductcontroller=async(req,res)=>{
 try{
 const {keyword}=req.params;
@@ -259,7 +286,7 @@ const products=await Products.find({
 catch(err){
     res.send({
         success:false,
-        message:err.message
+        message:"server error"
     })
 }
     }
@@ -280,12 +307,29 @@ catch(err){
         }
 
     }
-    export const braintreepaymentcontroller=async(req,res)=>{
+     export const braintreepaymentcontroller=async(req,res)=>{
         try{
 const {cart,auth,nonce}=req.body;
-let total=0;
-cart.map((item)=>total=total+item.value*item.pro.price);
+let total = 0;
+const validCart = [];
 
+for (const item of cart) {
+  const product = await Products.findById(item.pro._id); // Get latest product from DB
+
+  if (!product) continue; // product not found, skip
+
+  if (product.quantity >= item.value) {
+    total += item.value * product.price;
+    validCart.push(item); // only keep valid items
+  }
+}
+// console.log("thie the valid cart        ",validCart);
+if (total === 0) {
+  return res.send({
+    success: false,
+    message: "Sorry no item available",
+  });
+}
 
 console.log(total);
 gateway.transaction.sale({
@@ -294,22 +338,32 @@ gateway.transaction.sale({
     options: {
       submitForSettlement: true
     }
-  }, (err, result) => {
+  },async (err, result) => {
     if(result){
-    const order=new Order({
-        products:cart,
+    const order=await new Order({
+        products:validCart,
         buyerid:auth.user._id,
         buyer:auth.user,
         payments:result,
     }).save();
+    await Promise.all(
+  validCart.map(async (item) => {
+    const productId = item.pro._id;
+    const qty = item.value;
+
+    await Products.findByIdAndUpdate(productId, {
+      $inc: { quantity: -qty },
+    });
+  })
+);
     res.send({success:true});
 }
 else {
-    res.send({success:false,err});
+    res.send({success:false,message:"payment not successful"});
 }
   });
         }
         catch(err){
-            console.log(err);
+            res.send({success:false,message:"server error"});
         }
     }

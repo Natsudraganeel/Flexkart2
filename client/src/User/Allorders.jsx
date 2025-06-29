@@ -1,7 +1,9 @@
 import { React,useState,useEffect } from "react";
 import { useAuth } from "../auth/Auth";
+import moment from "moment-timezone"
 //import { useNavigate,NavLink } from "react-router-dom";
 import Userinfo from "./Userinfo";
+
 //import moment from "moment"
 import Spinner from "../spinner";
 import axios from "axios";
@@ -10,7 +12,11 @@ export default function Allorders (){
     const [orders,setorders]=useState([]);
     const getorders=async()=>{
         try{
-           const res=await axios.get(`https://flexkart2.onrender.com/api/auth/allorders/${auth.user._id}`);
+           const res=await axios.get(`http://localhost:3000/api/auth/allorders/${auth.user._id}`,{
+            headers:{
+                Authorization:auth.token
+            }
+           });
            
            //console.log( res.data);
             setorders( res.data);
@@ -36,9 +42,8 @@ export default function Allorders (){
       return "₹" + total;
     }
     function handledate(d){
-        let ans1=d.slice(0,10);
-        let ans2=d.slice(12,19)
-        return ans1+" "+ans2;
+    const formatted = moment(d).tz('Asia/Kolkata').format('DD MMM YYYY, hh:mm A');
+        return formatted;
 
     }
     return(
@@ -108,7 +113,24 @@ export default function Allorders (){
                             <>
                             <div>
                             <div>
-                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
+                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p.pro._id}`} alt="N/A"
+    
+          onError={(e) => {
+    e.target.onerror = null;
+    e.target.style.display = "none";
+    const altText = document.createElement("div");
+    altText.textContent = e.target.alt;
+    altText.style.width = "100px";
+    altText.style.height = "100px";
+    altText.style.marginTop = "10px";
+    altText.style.display = "flex";
+    altText.style.alignItems = "center";
+    altText.style.justifyContent = "center";
+    altText.style.border = "1px solid #ccc";
+    altText.style.backgroundColor = "#f0f0f0";
+    e.target.parentNode.appendChild(altText);
+  }}
+    />
                             </div>
                             <div className="mt-3 ml-3">
                             <p>Name :{p.pro.name}</p>
@@ -154,7 +176,22 @@ export default function Allorders (){
                             <>
                             <div>
                             <div>
-                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
+                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p.pro._id}`} alt="N/A"
+                                    onError={(e) => {
+    e.target.onerror = null;
+    e.target.style.display = "none";
+    const altText = document.createElement("div");
+    altText.textContent = e.target.alt;
+    altText.style.width = "100px";
+    altText.style.height = "100px";
+    altText.style.marginTop = "10px";
+    altText.style.display = "flex";
+    altText.style.alignItems = "center";
+    altText.style.justifyContent = "center";
+    altText.style.border = "1px solid #ccc";
+    altText.style.backgroundColor = "#f0f0f0";
+    e.target.parentNode.appendChild(altText);
+  }} />
                             </div>
                             <div className="mt-3 ml-3">
                             <p>Name :{p.pro.name}</p>

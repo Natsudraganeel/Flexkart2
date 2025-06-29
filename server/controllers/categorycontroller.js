@@ -1,11 +1,12 @@
 import Category from "../Models/Categorymodel.js";
 import slugify from "slugify";
+import Products from "../Models/Productmodel.js";
 export const createcategorycontroller=async(req,res)=>{
     try{
 const {name}=req.body;
 const existingcategory=await Category.findOne({name});
 if(existingcategory){
-    return res.send({succes:true,message:"category already exists"});
+    return res.send({success:false,message:"category already exists"});
 }
 else{
 const category=await new Category({name,slug:slugify(name)} ).save();
@@ -20,7 +21,7 @@ res.send({
         res.send(
             {
                 success:false,
-                message:"no category created",
+                message:"Error.no category created",
             }
         )
     }
@@ -29,6 +30,10 @@ export const updatecategorycontroller=async (req,res)=>{
 
     try{
         const {name}=req.body;
+        const existingcategory=await Category.findOne({name});
+if(existingcategory){
+    return res.send({success:false,message:"category already exists"});
+}
         const {id}=req.params;
         const category=await Category.findByIdAndUpdate(id,{name,slug:slugify(name)},{new:true});// new:true na korle update hoi na 
         res.send({
@@ -42,7 +47,7 @@ catch(err){
     res.send(
         {
             success:false,
-            message:"not updated",
+            message:"not updated(error)"
         }
     )
 }
@@ -61,7 +66,7 @@ export const allcategorycontroller=async(req,res)=>{
     catch(err){
         res.send({
             success:false,
-            message:"no category found",
+            message:"no category found(error)"
         })
     }
 
@@ -79,7 +84,7 @@ export const singlecategorycontroller=async (req,res)=>{
     catch(err){
 res.send({
     success:false,
-    message:err.message,
+    message:"server error"
 })
     }
 }
@@ -98,7 +103,7 @@ res.send({
     catch(err){
         res.send({
             success:false,
-            message:err.message
+            message:"server error"
         })
     }
 }
@@ -109,7 +114,7 @@ export const deletecategorycontroller=async(req,res)=>{
    
 
     await Category.findByIdAndDelete(id);
-    
+    await Products.deleteMany({category:id});
     res.send({
         success:true,
         message:"deleted",
@@ -120,7 +125,7 @@ export const deletecategorycontroller=async(req,res)=>{
 
     res.send({
         success:false,
-        message:"not deleted"
+        message:"not deleted(error)"
     })
  }
 
