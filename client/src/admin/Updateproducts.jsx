@@ -25,7 +25,7 @@ export default function Updateproducts(){
 
  const getsingleproduct=async()=>{
     try{
-const res=await axios.get(`http://localhost:3000/api/auth/products/get-product/${params.slug}`);
+const res=await axios.get(`https://flexkart2.onrender.com/api/auth/products/get-product/${params.slug}`);
 //console.log(res.data);
 setname(res.data.product.name);
 setprice(res.data.product.price);
@@ -60,7 +60,7 @@ getsingleproduct();
 // },[])
 
   const getallcategories=async()=>{  
-    const resi=await axios.get("http://localhost:3000/api/auth/category/getallcategories")
+    const resi=await axios.get("https://flexkart2.onrender.com/api/auth/category/getallcategories")
  if(resi.data.success===true){
    //console.log(resi.data.categories)
    setcategories(resi.data.categories)
@@ -78,7 +78,7 @@ getsingleproduct();
   const handledelete=async(e)=>{
     e.preventDefault();
     try{
-    const res=await axios.delete(`http://localhost:3000/api/auth/products/delete-product/${id}`,
+    const res=await axios.delete(`https://flexkart2.onrender.com/api/auth/products/delete-product/${id}`,
       {
     headers: {
       Authorization: auth.token,
@@ -120,7 +120,7 @@ getsingleproduct();
       //   cat,
       //   quantity,
       //   shipping ,id)
-      const response=await axios.put(`http://localhost:3000/api/auth/products/update-product/${id}`,productData,{
+      const response=await axios.put(`https://flexkart2.onrender.com/api/auth/products/update-product/${id}`,productData,{
     headers: {
       Authorization: auth.token,
     }
@@ -181,7 +181,7 @@ return (
                 )
                 :
                 ( <div>
-                    <img height={"200px"}  src= {`http://localhost:3000/api/auth/products/get-image/${id}`}  alt={id}/>
+                    <img height={"200px"}  src= {`https://flexkart2.onrender.com/api/auth/products/get-image/${id}`}  alt={id}/>
                     </div>)
                 }
                
