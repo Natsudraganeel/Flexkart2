@@ -14,7 +14,7 @@ export default function Orders(){
   const getorders=async()=>{
     try{
         // console.log(auth.token)
-       const res=await axios.get(`http://localhost:3000/api/auth/orders`,{
+       const res=await axios.get(`https://flexkart2.onrender.com/api/auth/orders`,{
         headers:{
             Authorization:auth.token
         }
@@ -55,7 +55,7 @@ useEffect(()=>{
 
     }
   const handlestatus=async(v,i)=>{
-    const res=await axios.put("http://localhost:3000/api/auth/changeorderstatus",{
+    const res=await axios.put("https://flexkart2.onrender.com/api/auth/changeorderstatus",{
       orderid:i,
       status:v
     },
@@ -146,7 +146,7 @@ return (
                             <>
                             <div>
                             <div>
-                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p.pro._id}`} alt="N/A"
+                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p.pro._id}`} alt="N/A"
                                    onError={(e) => {
     e.target.onerror = null;
     e.target.style.display = "none";
@@ -223,7 +223,7 @@ return (
                             <>
                             <div>
                             <div>
-                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`http://localhost:3000/api/auth/products/get-image/${p.pro._id}`} alt="N/A" 
+                            <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p.pro._id}`} alt="N/A" 
                                        onError={(e) => {
     e.target.onerror = null;
     e.target.style.display = "none";
