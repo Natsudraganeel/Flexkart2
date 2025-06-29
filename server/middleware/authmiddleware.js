@@ -13,6 +13,9 @@ export const requiredsignin = async (req, res, next) => {
      req.user = decode;
       next();
     } catch (error) {
+          if(error.name==="TokenExpiredError"){
+        res.send({succes:false,message:"Session Expired.Relogin Please!"});
+      }
       console.log(error);
     }
   };
