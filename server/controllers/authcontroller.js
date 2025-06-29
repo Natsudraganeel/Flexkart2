@@ -39,7 +39,7 @@ else{
         if(!match) {return res.send({success:false,message:'Invalid Password'})}
         else{
         //create token for authentication
-        let token=JWT.sign({_id:user._id},process.env.JWT_SECRET);//signing the payload which contains _id of the user
+        let token=JWT.sign({_id:user._id},process.env.JWT_SECRET,{expiresIn:"3h"});//signing the payload which contains _id of the user
         res.send({
          success:true,
          message: 'login successful',
@@ -88,7 +88,7 @@ export const forgotcontroller=async(req,res)=>{
   
   else{
     //create token for authentication
-    let token=JWT.sign({_id:user._id},process.env.JWT_SECRET);//signing the payload which contains _id of the user
+    let token=JWT.sign({_id:user._id},process.env.JWT_SECRET,{expiresIn:"3h"});//signing the payload which contains _id of the user
     res.send({
      success:true,
      message: 'login successful',
