@@ -136,7 +136,7 @@ nav("/");
         <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p.pro._id}`} alt={p.name} />
         </div>
     <div class="p-5">
-        <h5>Name: {p.pro.name}</h5>
+        <h5>Name: {p.pro.name.length<=20 ? p.pro.name : p.pro.name.substring(0,20)+"..."}</h5>
         <div className="flex flex-wrap">
         <p>Price:₹ {p.pro.price}</p>
         </div>
