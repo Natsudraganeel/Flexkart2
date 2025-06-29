@@ -18,13 +18,12 @@ export default function Forgot (){
     var ox;
     const nav=useNavigate();
    
-
-        async function sendEmail(event){
+async function sendEmail(event){
 
             event.preventDefault();
     
             try{
-              const res=await axios.post("https://flexkart2.onrender.com/api/auth/forgotpassword",{
+              const res=await axios.post("http://localhost:3000/api/auth/emailcheck",{
                 email
               })
               // console.log(res.data);
@@ -38,7 +37,12 @@ export default function Forgot (){
               
                // console.log(ox);
                   setsentotp(ox);
-                 // console.log(sentotp);
+                //  console.log(process.env.REACT_APP_SMTP_PASSWORD);
+                //  console.log(process.env.REACT_APP_SMTP_HOST);
+                //    console.log(process.env.REACT_APP_SMTP_PORT);
+                //    console.log(process.env.REACT_APP_USERNAME);
+                //    console.log(process.env.REACT_APP_MY_EMAIL);
+                 //re_H2jpiqcJ_3wpAogQBAz4zZCBxrYutZ1t4
                 const config={
                   Username : process.env.REACT_APP_USERNAME,
                   Password : process.env.REACT_APP_SMTP_PASSWORD,
@@ -50,7 +54,7 @@ export default function Forgot (){
                   Body : `Your otp  is ${ox}`,
                   
               }
-              if(window.Email){
+             
                 window.Email.send(config).then(
                   () =>toast.info('OTP has been sent.Check your mail', {
                     position: "top-right",
@@ -59,7 +63,7 @@ export default function Forgot (){
                     
                     }) 
                 ); 
-              }
+              
             }
             }
               catch(err){
@@ -74,32 +78,35 @@ export default function Forgot (){
     async function handlesubmit(e){
             e.preventDefault();
             try{
-              const res=await axios.post("https://flexkart2.onrender.com/api/auth/forgotpassword",{
+              
+              let ans=otp1+otp2+otp3+otp4;
+            //  console.log(res.data);
+            //  console.log(sentotp);
+              if( sentotp==ans){
+               const res=await axios.post("http://localhost:3000/api/auth/forgotpassword",{
                 email,
                
           
               })
-              let ans=otp1+otp2+otp3+otp4;
-            //  console.log(res.data);
-            //  console.log(sentotp);
-              if(res.data.success===true && sentotp==ans){
-               
+              if(res.data.success===true){
                 setauth({...auth,
                 user:res.data.user,
                 token:res.data.token
   
                 })
-                localStorage.setItem('auth',JSON.stringify(res.data));
+                    localStorage.setItem('auth',JSON.stringify(res.data));
                 //alert("success");
                 nav("/");
-             
               }
-              else if(res.data.success===true && sentotp!==ans){
-                 setclick("The otp entered is wrong.Try resending the otp");
-              }
-              else{
+            
+             else{
                 alert(res.data.message);
               }
+              }
+              else {
+                 setclick("The otp entered is wrong.Try resending the otp");
+              }
+              
             }
             catch(err){
               console.log(err);
