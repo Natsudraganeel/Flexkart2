@@ -22,7 +22,7 @@ const closeForm=()=>{
 }
 
   const getallcategories=async()=>{  
-     const resi=await axios.get("http://localhost:3000/api/auth/category/getallcategories",{
+     const resi=await axios.get("https://flexkart2.onrender.com/api/auth/category/getallcategories",{
     headers: {
       Authorization: auth.token,
     },
@@ -44,7 +44,7 @@ const closeForm=()=>{
   const handlesubmit=async(e)=>{
         e.preventDefault();
     try{
-    const rest=await axios.post("http://localhost:3000/api/auth/category/create-category",
+    const rest=await axios.post("https://flexkart2.onrender.com/api/auth/category/create-category",
   {
     name:createcat
   },{
@@ -75,7 +75,7 @@ catch(err){
   const handledelete=async(rex)=>{
 
     try{
-        const response=await axios.delete(`http://localhost:3000/api/auth/category/delete-category/${rex._id}`,
+        const response=await axios.delete(`https://flexkart2.onrender.com/api/auth/category/delete-category/${rex._id}`,
           {
     headers: {
       Authorization: auth.token,
