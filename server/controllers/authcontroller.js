@@ -64,6 +64,18 @@ else{
     }
 
  }
+ export const emailcheck=async(req,res)=>{
+ const {email}=req.body;
+  let user= await User.findOne({email:email});  // i forgot to write await here.The problem i faced was that the user was not found.
+  console.log(user.name);
+  if(!user){
+    return res.send({success:false,message:"You are not registered"});
+  }
+  res.send({
+    success:true,
+    message:"You are registered"
+  })
+ }
 export const forgotcontroller=async(req,res)=>{
   try{
     
