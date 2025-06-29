@@ -24,7 +24,7 @@ async function handlesubmit(e){
   e.preventDefault();
  // console.log("in update")
   try{
-const res=await axios.put("http://localhost:3000/api/auth/updateprofile",{
+const res=await axios.put("https://flexkart2.onrender.com/api/auth/updateprofile",{
   name,address,email,phone,opassword:pass1,npassword:pass2,id:auth.user._id
 }, {
     headers: {
