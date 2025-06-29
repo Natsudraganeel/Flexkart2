@@ -10,7 +10,7 @@ import categoryroutes from "./routes/categoryroute.js"
 dotenv.config();// sabse upar hona chahiye
 const app=express();
 app.use(cors({
-    origin:process.env.FRONTEND_URL}));
+    origin:"https://flexkart.onrender.com"}));
 app.use(express.json());// alternative of bodyparser
 app.use(morgan('dev')); //log req and res in console for development
 app.use("/api/auth",authroutes);
