@@ -11,7 +11,7 @@ export default function Allproducts(){
     const [word,setword]=useState("");
     const getallproducts=async()=>{
         try{
-        const res=await axios.get("http://localhost:3000/api/auth/products/getallproducts");
+        const res=await axios.get("https://flexkart2.onrender.com/api/auth/products/getallproducts");
         if(res.data.success==true){
           console.log(res.data.products);
             setproducts(res.data.products);
@@ -33,7 +33,7 @@ export default function Allproducts(){
 
         const handlesubmit=async()=>{
             try{
-            const res=await axios.get(`http://localhost:3000/api/auth/products/searchproduct/${word}`);
+            const res=await axios.get(`https://flexkart2.onrender.com/api/auth/products/searchproduct/${word}`);
             if(res.data.success===true){
                 setproducts(res.data.products);
             }
