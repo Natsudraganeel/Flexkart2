@@ -91,7 +91,7 @@ export default function Allproducts(){
         <img  style={{width:"100px" ,height :"100px", marginTop:"10px" }}   src={`https://flexkart2.onrender.com/api/auth/products/get-image/${p._id}`} alt={p.name} />
         </div>
     <div class="p-5">
-        <h5>Name: {p.name}</h5>
+        <h5>Name: {p.name.length<=18 ? p.name : p.name.substring(0,18)+"..."}</h5>
         <div className="flex flex-wrap">
         <p>Price:₹ {p.price}</p>
         </div>
